@@ -273,4 +273,3 @@ def calculate_bounding_box_from_image(im, curr_page):
         bounding_box[1] * convert_y]
 
     return final_box
-

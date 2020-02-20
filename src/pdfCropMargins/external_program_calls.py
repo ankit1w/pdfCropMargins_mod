@@ -159,14 +159,8 @@ def glob_if_windows_os(path, exact_num_args=False):
     if system_os != "Windows": return [path]
     globbed = glob.glob(path)
     if not globbed:
-        print("\nWarning in pdfCropMargins: The wildcards in the path\n   "
-              + path + "\nfailed to expand.  Treating as literal.",
-              file=sys.stderr)
         globbed = [path]
     if exact_num_args and len(globbed) != exact_num_args:
-        print("\nError in pdfCropMargins: The wildcards in the path\n   "
-              + path + "\nexpand to the wrong number of files.",
-              file=sys.stderr)
         cleanup_and_exit(1)
     return globbed
 
@@ -443,16 +437,8 @@ def init_and_test_pdftoppm_executable(prefer_local=False, exit_on_fail=False):
     # The local pdftoppm.exe can be tested on Linux with Wine.  Just hardcode
     # the system type to "Windows" and it automatically runs Wine on the exe.
     if prefer_local or (not pdftoppm_executable and system_os == "Windows"):
-        if not prefer_local:
-            print("\nWarning from pdfCropMargins: No system pdftoppm was found."
-                  "\nReverting to an older, locally-packaged executable.  To silence"
-                  "\nthis warning use the '--pdftoppmLocal' (or '-pdl') flag.",
-                  file=sys.stderr)
-
         # NOTE: When updating xpdf version, change here and ALSO in setup.py, near top.
-        path = os.path.join(project_src_directory, "pdfCropMargins",
-                                                   "pdftoppm_windows_local",
-                                                   "xpdf_tools_win_4_01_01")
+        path = os.path.join(program_code_directory,"pdftoppm_windows_local","xpdf_tools_win_4_01_01")
 
         # Paths to the package_data Windows executables, made part of the package
         # with __init__.py files.
@@ -691,4 +677,3 @@ def show_preview(viewer_path, pdf_file_name):
               "\n   ", viewer_path, "\nwas not found or failed to execute correctly.\n",
               file=sys.stderr)
     return
-
